@@ -89,8 +89,8 @@ function Toggle({ checked, onChange, ariaLabel }) {
       style={{ backgroundColor: checked ? 'var(--color-primary)' : 'var(--color-border)' }}
     >
       <motion.div
-        className="absolute top-0.5 w-5 h-5 rounded-full bg-white shadow"
-        animate={{ right: checked ? '2px' : 'calc(100% - 22px)' }}
+        className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow"
+        animate={{ x: checked ? 20 : 0 }}
         transition={{ type: 'spring', stiffness: 500, damping: 35 }}
       />
     </button>

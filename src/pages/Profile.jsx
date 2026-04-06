@@ -85,11 +85,19 @@ function Toggle({ checked, onChange, ariaLabel }) {
       aria-checked={checked}
       aria-label={ariaLabel}
       onClick={() => onChange(!checked)}
-      className="w-11 h-6 rounded-full relative transition-colors flex-shrink-0"
-      style={{ backgroundColor: checked ? 'var(--color-primary)' : 'var(--color-border)' }}
+      style={{
+        width: '44px', height: '24px', borderRadius: '12px',
+        position: 'relative', flexShrink: 0, border: 'none', cursor: 'pointer',
+        backgroundColor: checked ? 'var(--color-primary)' : 'var(--color-border)',
+        transition: 'background-color 0.2s',
+      }}
     >
       <motion.div
-        className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow"
+        style={{
+          position: 'absolute', top: '2px', left: '2px',
+          width: '20px', height: '20px', borderRadius: '50%',
+          backgroundColor: '#fff', boxShadow: '0 1px 4px rgba(0,0,0,0.3)',
+        }}
         animate={{ x: checked ? 20 : 0 }}
         transition={{ type: 'spring', stiffness: 500, damping: 35 }}
       />

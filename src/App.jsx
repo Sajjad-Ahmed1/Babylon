@@ -2,7 +2,7 @@
  * App.jsx — الجذر الرئيسي لمنصة بابل
  * Lazy loading + Suspense + Layout wrapper + حماية المسارات
  */
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { PrivateRoute, PublicRoute } from './components/shared/PrivateRoute'
 import Layout from './components/shared/Layout'
@@ -19,18 +19,34 @@ const Profile   = lazy(() => import('./pages/Profile'))
 function PageSkeleton() {
   return (
     <div className="min-h-screen flex flex-col gap-4 p-6" style={{ backgroundColor: 'var(--color-bg-dark)' }}>
-      <div className="skeleton h-10 w-48 rounded-xl" />
-      <div className="skeleton h-32 w-full rounded-2xl" />
-      <div className="skeleton h-48 w-full rounded-2xl" />
-      <div className="skeleton h-32 w-full rounded-2xl" />
+      <div className="skeleton h-8 w-40 rounded-xl" />
+      <div className="skeleton h-28 w-full rounded-2xl" />
+      <div className="skeleton h-44 w-full rounded-2xl" />
+      <div className="skeleton h-28 w-full rounded-2xl" />
     </div>
   )
+}
+
+// Preload all route chunks in the background after mount
+function ChunkPreloader() {
+  useEffect(() => {
+    const t = setTimeout(() => {
+      import('./pages/Dashboard')
+      import('./pages/Tracker')
+      import('./pages/Services')
+      import('./pages/Profile')
+      import('./components/shared/Layout')
+    }, 800)
+    return () => clearTimeout(t)
+  }, [])
+  return null
 }
 
 export default function App() {
   return (
     <BrowserRouter>
       <div dir="rtl" style={{ minHeight: '100vh', backgroundColor: 'var(--color-bg-dark)' }}>
+        <ChunkPreloader />
         <Suspense fallback={<PageSkeleton />}>
           <Routes>
             {/* Splash */}

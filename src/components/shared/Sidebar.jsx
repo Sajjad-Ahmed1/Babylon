@@ -1,14 +1,12 @@
 /**
- * Sidebar — شريط التنقل الجانبي للشاشات الكبيرة (>1024px)
- * قابل للطي: عرض كامل (272px) أو أيقونات فقط (72px)
- * يظهر فقط على lg وما فوق
+ * Sidebar — شريط التنقل الجانبي (desktop > 1024px)
+ * collapsed state مُدار من Layout لمزامنة padding المحتوى
  */
-import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   LayoutDashboard, Search, BookOpen, User,
-  LogOut, ChevronRight, ChevronLeft, Shield,
+  LogOut, ChevronRight, ChevronLeft,
 } from 'lucide-react'
 import useAppStore from '../../store/useAppStore'
 
@@ -19,8 +17,7 @@ const NAV_LINKS = [
   { to: '/profile',   icon: User,             label: 'حسابي',        desc: 'بياناتك الشخصية' },
 ]
 
-export default function Sidebar() {
-  const [collapsed, setCollapsed] = useState(false)
+export default function Sidebar({ collapsed, onCollapse }) {
   const { user, logout } = useAppStore()
   const navigate = useNavigate()
 
@@ -29,101 +26,83 @@ export default function Sidebar() {
     navigate('/login', { replace: true })
   }
 
-  const width = collapsed ? 72 : 272
+  const w = collapsed ? 72 : 272
 
   return (
-    <motion.aside
-      animate={{ width }}
-      transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
+    <aside
       className="hidden lg:flex flex-col fixed top-0 right-0 h-screen z-40 overflow-hidden"
       style={{
+        width: w,
         backgroundColor: 'var(--color-bg-card)',
         borderLeft: '1px solid var(--color-border)',
-        width,
+        transition: 'width 0.22s cubic-bezier(0.4,0,0.2,1)',
+        willChange: 'width',
       }}
       aria-label="القائمة الجانبية"
     >
-      {/* ── الرأس: شعار بابل ── */}
+      {/* ── الرأس ── */}
       <div
-        className="flex items-center gap-3 px-4 py-5 flex-shrink-0"
-        style={{ borderBottom: '1px solid var(--color-border)', minHeight: '72px' }}
+        className="flex items-center gap-3 px-4 flex-shrink-0"
+        style={{ borderBottom: '1px solid var(--color-border)', minHeight: '64px' }}
       >
         <div
-          className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+          className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
           style={{ backgroundColor: 'var(--color-secondary)' }}
         >
-          <span className="text-white font-black text-lg">ب</span>
+          <span className="text-white font-black text-base">ب</span>
         </div>
-        <AnimatePresence>
-          {!collapsed && (
-            <motion.div
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -10 }}
-              transition={{ duration: 0.2 }}
-              className="overflow-hidden"
-            >
-              <p className="text-base font-black leading-tight" style={{ color: 'var(--color-text-main)', whiteSpace: 'nowrap' }}>بابل</p>
-              <p className="text-xs" style={{ color: 'var(--color-text-muted)', whiteSpace: 'nowrap' }}>البوابة الوطنية</p>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {!collapsed && (
+          <div className="overflow-hidden">
+            <p className="text-base font-black leading-tight whitespace-nowrap" style={{ color: 'var(--color-text-main)' }}>بابل</p>
+            <p className="text-xs whitespace-nowrap" style={{ color: 'var(--color-text-muted)' }}>البوابة الوطنية</p>
+          </div>
+        )}
       </div>
 
       {/* ── روابط التنقل ── */}
-      <nav className="flex-1 px-2 py-4 overflow-y-auto" aria-label="التنقل الرئيسي">
-        <div className="flex flex-col gap-1">
+      <nav className="flex-1 px-2 py-3 overflow-y-auto" aria-label="التنقل الرئيسي">
+        <div className="flex flex-col gap-0.5">
           {NAV_LINKS.map(({ to, icon: Icon, label, desc }) => (
             <NavLink
               key={to}
               to={to}
               title={collapsed ? label : undefined}
               aria-label={label}
-              className="group flex items-center gap-3 px-3 py-3 rounded-xl transition-all relative"
+              className="group flex items-center gap-3 px-3 py-2.5 rounded-xl relative"
               style={({ isActive }) => ({
                 backgroundColor: isActive ? 'rgba(243,156,18,0.1)' : 'transparent',
                 color: isActive ? 'var(--color-secondary)' : 'var(--color-text-muted)',
-                minHeight: '48px',
+                minHeight: '44px',
+                transition: 'background-color 0.15s ease, color 0.15s ease',
               })}
             >
               {({ isActive }) => (
                 <>
-                  {/* Active indicator strip */}
+                  {/* Active strip */}
                   {isActive && (
                     <motion.div
                       layoutId="sidebar-active"
-                      className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-6 rounded-full"
+                      className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 rounded-full"
                       style={{ backgroundColor: 'var(--color-secondary)' }}
-                      transition={{ type: 'spring', stiffness: 400, damping: 35 }}
+                      transition={{ type: 'spring', stiffness: 600, damping: 40 }}
                     />
                   )}
                   <Icon
-                    size={20}
+                    size={19}
                     strokeWidth={isActive ? 2.5 : 1.8}
                     className="flex-shrink-0"
-                    style={{ color: isActive ? 'var(--color-secondary)' : 'var(--color-text-muted)' }}
                   />
-                  <AnimatePresence>
-                    {!collapsed && (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.15 }}
-                        className="overflow-hidden"
-                      >
-                        <p
-                          className="text-sm font-semibold leading-tight"
-                          style={{ color: isActive ? 'var(--color-secondary)' : 'var(--color-text-main)', whiteSpace: 'nowrap' }}
-                        >
-                          {label}
-                        </p>
-                        <p className="text-xs" style={{ color: 'var(--color-text-muted)', whiteSpace: 'nowrap' }}>
-                          {desc}
-                        </p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                  {!collapsed && (
+                    <div className="overflow-hidden">
+                      <p className="text-sm font-semibold leading-tight whitespace-nowrap"
+                        style={{ color: isActive ? 'var(--color-secondary)' : 'var(--color-text-main)' }}>
+                        {label}
+                      </p>
+                      <p className="text-xs whitespace-nowrap" style={{ color: 'var(--color-text-muted)' }}>
+                        {desc}
+                      </p>
+                    </div>
+                  )}
                 </>
               )}
             </NavLink>
@@ -131,81 +110,57 @@ export default function Sidebar() {
         </div>
       </nav>
 
-      {/* ── القسم السفلي: المستخدم + خروج ── */}
-      <div
-        className="px-2 py-4 flex-shrink-0"
-        style={{ borderTop: '1px solid var(--color-border)' }}
-      >
-        {/* معلومات المستخدم */}
+      {/* ── المستخدم + خروج ── */}
+      <div className="px-2 py-3 flex-shrink-0" style={{ borderTop: '1px solid var(--color-border)' }}>
         {!collapsed && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="flex items-center gap-2.5 px-3 py-3 rounded-xl mb-2"
+          <div
+            className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl mb-1.5"
             style={{ backgroundColor: 'rgba(255,255,255,0.03)' }}
           >
-            <div
-              className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
-              style={{ backgroundColor: 'var(--color-primary)' }}
-            >
-              <User size={14} className="text-white" />
+            <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
+              style={{ backgroundColor: 'var(--color-primary)' }}>
+              <User size={13} className="text-white" />
             </div>
             <div className="overflow-hidden">
-              <p className="text-xs font-semibold truncate" style={{ color: 'var(--color-text-main)' }}>
-                {user.name}
-              </p>
-              <p className="text-xs font-mono truncate" style={{ color: 'var(--color-text-muted)' }}>
-                {user.nationalId}
-              </p>
+              <p className="text-xs font-semibold truncate" style={{ color: 'var(--color-text-main)' }}>{user.name}</p>
+              <p className="text-xs font-mono truncate" style={{ color: 'var(--color-text-muted)' }}>{user.nationalId}</p>
             </div>
-          </motion.div>
+          </div>
         )}
 
-        {/* زر الخروج */}
         <button
           onClick={handleLogout}
-          aria-label="تسجيل الخروج"
           title={collapsed ? 'تسجيل الخروج' : undefined}
-          className="w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-colors"
+          aria-label="تسجيل الخروج"
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl"
           style={{
             backgroundColor: 'rgba(192,57,43,0.06)',
             color: 'var(--color-danger)',
-            minHeight: '48px',
+            minHeight: '44px',
+            transition: 'background-color 0.15s ease',
           }}
           onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'rgba(192,57,43,0.15)' }}
           onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'rgba(192,57,43,0.06)' }}
         >
-          <LogOut size={18} className="flex-shrink-0" />
-          <AnimatePresence>
-            {!collapsed && (
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="text-sm font-semibold"
-                style={{ whiteSpace: 'nowrap' }}
-              >
-                تسجيل الخروج
-              </motion.span>
-            )}
-          </AnimatePresence>
+          <LogOut size={17} className="flex-shrink-0" />
+          {!collapsed && <span className="text-sm font-semibold whitespace-nowrap">تسجيل الخروج</span>}
         </button>
       </div>
 
       {/* ── زر الطي ── */}
       <button
-        onClick={() => setCollapsed((c) => !c)}
+        onClick={() => onCollapse(!collapsed)}
         aria-label={collapsed ? 'توسيع القائمة' : 'طي القائمة'}
-        className="absolute -left-3.5 top-20 w-7 h-7 rounded-full flex items-center justify-center z-50 transition-colors"
+        className="absolute -left-3 top-[72px] w-6 h-6 rounded-full flex items-center justify-center z-50"
         style={{
           backgroundColor: 'var(--color-bg-card)',
           border: '1px solid var(--color-border)',
           color: 'var(--color-text-muted)',
+          transition: 'background-color 0.15s ease',
         }}
       >
-        {collapsed ? <ChevronLeft size={13} /> : <ChevronRight size={13} />}
+        {collapsed ? <ChevronLeft size={12} /> : <ChevronRight size={12} />}
       </button>
-    </motion.aside>
+    </aside>
   )
 }

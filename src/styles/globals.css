@@ -172,6 +172,17 @@
     transform: scale(0.96);
   }
 
+  /* ── Layout content offset (sidebar desktop only) ── */
+  .layout-content {
+    padding-right: 0;
+    transition: padding-right 0.22s cubic-bezier(0.4,0,0.2,1);
+  }
+  @media (min-width: 1024px) {
+    .layout-content {
+      padding-right: var(--sidebar-w, 272px);
+    }
+  }
+
   /* ── Golden glow ── */
   .glow-gold {
     box-shadow: 0 0 24px rgba(243, 156, 18, 0.4), 0 0 48px rgba(243, 156, 18, 0.15);

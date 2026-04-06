@@ -1,31 +1,38 @@
 /**
- * Layout.jsx — الغلاف المشترك لجميع الصفحات المحمية
- * يوفر: Sidebar (desktop) + DashboardHeader (top bar) + BottomNav (mobile)
- * الصفحة الداخلية تضع محتواها فقط
+ * Layout.jsx — الغلاف المشترك للصفحات المحمية
+ * يملك collapsed state ويمرره للـ Sidebar لمزامنة padding المحتوى
  */
+import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { useLocation } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import BottomNav from './BottomNav'
 import AppHeader from './AppHeader'
 
 export default function Layout({ children }) {
+  const [collapsed, setCollapsed] = useState(false)
+  const location = useLocation()
+
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--color-bg-dark)' }}>
       {/* Sidebar — desktop فقط */}
-      <Sidebar />
+      <Sidebar collapsed={collapsed} onCollapse={setCollapsed} />
 
-      {/* المحتوى الرئيسي — يتحرك لليسار بجانب الـ sidebar */}
-      <div className="lg:pr-[272px] transition-all duration-300">
+      {/* المحتوى الرئيسي — يتكيف مع عرض الـ sidebar على desktop فقط */}
+      <div
+        className="flex flex-col min-h-screen layout-content"
+        style={{ '--sidebar-w': collapsed ? '72px' : '272px' }}
+      >
         {/* Header */}
         <AppHeader />
 
         {/* محتوى الصفحة */}
         <motion.main
-          key={typeof window !== 'undefined' ? window.location.pathname : ''}
-          initial={{ opacity: 0, y: 10 }}
+          key={location.pathname}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="px-4 py-6 pb-24 lg:pb-10 max-w-5xl mx-auto"
+          transition={{ duration: 0.22, ease: 'easeOut' }}
+          className="flex-1 px-4 sm:px-6 py-5 pb-24 lg:pb-8 max-w-5xl mx-auto w-full"
         >
           {children}
         </motion.main>

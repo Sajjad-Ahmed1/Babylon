@@ -623,16 +623,13 @@ export default function Login() {
                   }}
                   aria-label="تسجيل الدخول بالبصمة"
                 >
-                  {/* Pulse ring behind fingerprint */}
-                  <span className="relative flex-shrink-0">
-                    <motion.span
-                      className="absolute inset-0 rounded-full"
-                      style={{ backgroundColor: 'rgba(243,156,18,0.3)' }}
-                      animate={{ scale: [1, 1.8], opacity: [0.6, 0] }}
-                      transition={{ repeat: Infinity, duration: 1.8, ease: 'easeOut' }}
-                    />
-                    <Fingerprint size={22} style={{ color: 'var(--color-secondary)', position: 'relative' }} />
-                  </span>
+                  <motion.span
+                    className="flex-shrink-0"
+                    animate={{ scale: [1, 1.12, 1], opacity: [0.75, 1, 0.75] }}
+                    transition={{ repeat: Infinity, duration: 2.2, ease: 'easeInOut' }}
+                  >
+                    <Fingerprint size={22} style={{ color: 'var(--color-secondary)' }} />
+                  </motion.span>
                   <span>تسجيل الدخول بالبصمة</span>
                 </motion.button>
 

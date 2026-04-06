@@ -478,6 +478,9 @@ export default function Login() {
     setLoading(false)
     if (result.success) {
       setSuccess(true)
+      // preload Dashboard chunk during success animation to avoid blank screen
+      import('./Dashboard')
+      import('../components/shared/Layout')
       setTimeout(() => navigate('/dashboard', { replace: true }), 1400)
     }
   }

@@ -80,28 +80,42 @@ function SettingRow({ icon: Icon, label, children }) {
 /* Toggle بسيط */
 function Toggle({ checked, onChange, ariaLabel }) {
   return (
-    <button
+    <div
       role="switch"
       aria-checked={checked}
       aria-label={ariaLabel}
       onClick={() => onChange(!checked)}
+      tabIndex={0}
+      onKeyDown={(e) => (e.key === ' ' || e.key === 'Enter') && onChange(!checked)}
       style={{
-        width: '44px', height: '24px', borderRadius: '12px',
-        position: 'relative', flexShrink: 0, border: 'none', cursor: 'pointer',
+        display: 'inline-flex',
+        alignItems: 'center',
+        width: '44px',
+        height: '24px',
+        borderRadius: '999px',
+        flexShrink: 0,
+        cursor: 'pointer',
+        position: 'relative',
         backgroundColor: checked ? 'var(--color-primary)' : 'var(--color-border)',
-        transition: 'background-color 0.2s',
+        transition: 'background-color 0.25s ease',
+        boxSizing: 'border-box',
       }}
     >
       <motion.div
         style={{
-          position: 'absolute', top: '2px', left: '2px',
-          width: '20px', height: '20px', borderRadius: '50%',
-          backgroundColor: '#fff', boxShadow: '0 1px 4px rgba(0,0,0,0.3)',
+          position: 'absolute',
+          top: '2px',
+          left: '2px',
+          width: '20px',
+          height: '20px',
+          borderRadius: '50%',
+          backgroundColor: '#ffffff',
+          boxShadow: '0 1px 4px rgba(0,0,0,0.35)',
         }}
         animate={{ x: checked ? 20 : 0 }}
         transition={{ type: 'spring', stiffness: 500, damping: 35 }}
       />
-    </button>
+    </div>
   )
 }
 

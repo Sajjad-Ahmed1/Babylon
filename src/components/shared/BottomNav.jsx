@@ -3,13 +3,14 @@
  * 4 روابط: الرئيسية / تتبع / الخدمات / حسابي
  */
 import { NavLink } from 'react-router-dom'
-import { LayoutDashboard, Search, BookOpen, User } from 'lucide-react'
+import { LayoutDashboard, Search, BookOpen, User, WalletCards } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 const LINKS = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'الرئيسية' },
   { to: '/tracker',   icon: Search,          label: 'التتبع' },
   { to: '/services',  icon: BookOpen,         label: 'الخدمات' },
+  { to: '/wallet',    icon: WalletCards,      label: 'محفظتي' },
   { to: '/profile',   icon: User,             label: 'حسابي' },
 ]
 

@@ -14,6 +14,7 @@ const Dashboard = lazy(() => import('./pages/Dashboard'))
 const Tracker   = lazy(() => import('./pages/Tracker'))
 const Services  = lazy(() => import('./pages/Services'))
 const Profile   = lazy(() => import('./pages/Profile'))
+const Wallet    = lazy(() => import('./pages/Wallet'))
 
 // Skeleton fallback بسيط أثناء التحميل
 function PageSkeleton() {
@@ -35,6 +36,7 @@ function ChunkPreloader() {
       import('./pages/Tracker')
       import('./pages/Services')
       import('./pages/Profile')
+      import('./pages/Wallet')
       import('./components/shared/Layout')
     }, 800)
     return () => clearTimeout(t)
@@ -99,6 +101,17 @@ export default function App() {
                 <PrivateRoute>
                   <Layout>
                     <Profile />
+                  </Layout>
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path="/wallet"
+              element={
+                <PrivateRoute>
+                  <Layout>
+                    <Wallet />
                   </Layout>
                 </PrivateRoute>
               }

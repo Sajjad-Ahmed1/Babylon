@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Search, X } from 'lucide-react'
 import CategoryTabs from '../components/services/CategoryTabs'
 import ServiceCard from '../components/services/ServiceCard'
+import OfficeStatusWidget from '../components/services/OfficeStatusWidget'
 import { lifeEvents } from '../data/services'
 
 export default function Services() {
@@ -30,6 +31,9 @@ export default function Services() {
 
   return (
     <>
+      {/* حالة الدوائر */}
+      <OfficeStatusWidget />
+
       {/* شريط البحث */}
       <motion.div
         initial={{ opacity: 0, y: 8 }}

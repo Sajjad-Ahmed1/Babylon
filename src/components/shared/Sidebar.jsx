@@ -6,7 +6,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   LayoutDashboard, Search, BookOpen, User,
-  LogOut, ChevronRight, ChevronLeft,
+  LogOut, ChevronRight, ChevronLeft, WalletCards,
 } from 'lucide-react'
 import useAppStore from '../../store/useAppStore'
 
@@ -14,6 +14,7 @@ const NAV_LINKS = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'الرئيسية',     desc: 'لوحة التحكم' },
   { to: '/tracker',   icon: Search,          label: 'تتبع المعاملة', desc: 'حالة معاملاتك' },
   { to: '/services',  icon: BookOpen,         label: 'الخدمات',      desc: 'دليل الخدمات' },
+  { to: '/wallet',    icon: WalletCards,      label: 'محفظتي',       desc: 'وثائقي الرقمية' },
   { to: '/profile',   icon: User,             label: 'حسابي',        desc: 'بياناتك الشخصية' },
 ]
 

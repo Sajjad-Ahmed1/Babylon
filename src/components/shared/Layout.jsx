@@ -32,7 +32,7 @@ export default function Layout({ children }) {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.22, ease: 'easeOut' }}
-          className="flex-1 px-4 sm:px-6 py-5 pb-24 lg:pb-8 max-w-5xl mx-auto w-full"
+          className="flex-1 px-3 sm:px-5 py-4 pb-24 lg:pb-8 max-w-5xl mx-auto w-full"
         >
           {children}
         </motion.main>

@@ -271,7 +271,7 @@ function DecorativePanel() {
             {[1,2,3,4,5].map((s) => <Star key={s} size={12} fill="#F39C12" style={{ color: '#F39C12' }} />)}
           </div>
           <p className="text-sm italic leading-relaxed" style={{ color: 'rgba(232,240,254,0.8)' }}>
-            "وفّرت عليّ 3 أيام مراجعة — ما احتجت أروح الدائرة أبداً"
+            "وفّرت عليّ 3 أيام مراجعة — ما احتاجيت أروح الدائرة أبداً"
           </p>
           <p className="text-xs mt-2 font-semibold" style={{ color: 'var(--color-secondary)' }}>
             — أحمد، البصرة
@@ -494,7 +494,7 @@ function OtpStep({ nationalId, onSubmit, onBack, isLoading, error, onClearError 
       <button onClick={onBack}
         className="w-full flex items-center justify-center gap-1.5 py-3 rounded-xl text-sm font-medium"
         style={{ color: 'var(--color-text-muted)' }}>
-        <ChevronRight size={14} />تغيير رقم الهوية
+        <ChevronRight size={14} />رجوع
       </button>
     </motion.div>
   )

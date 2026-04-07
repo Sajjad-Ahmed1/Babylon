@@ -231,6 +231,27 @@
 .animate-count-up    { animation: count-up 0.6s ease both; }
 
 /* ==========================================
+   Responsive Mobile Fixes
+   ========================================== */
+
+/* منع overflow أفقي على الهاتف */
+@media (max-width: 1023px) {
+  html, body { overflow-x: hidden; max-width: 100vw; }
+
+  /* تقليل padding البطاقات على الهاتف الصغير */
+  .card { border-radius: 10px; }
+
+  /* ضمان أن النصوص لا تفيض */
+  p, span, h1, h2, h3 { overflow-wrap: break-word; word-break: break-word; }
+}
+
+/* شاشات صغيرة جداً (320px) */
+@media (max-width: 375px) {
+  html { font-size: 14px; }
+  .card { padding: 0.875rem !important; }
+}
+
+/* ==========================================
    Print Styles — طباعة المعاملات
    ========================================== */
 @media print {

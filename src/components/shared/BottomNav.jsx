@@ -31,10 +31,10 @@ export default function BottomNav() {
           key={to}
           to={to}
           aria-label={label}
-          className="flex-1 flex flex-col items-center justify-center gap-0.5 py-2.5 text-xs font-medium transition-colors relative"
+          className="flex-1 flex flex-col items-center justify-center gap-0.5 py-2 transition-colors relative"
           style={({ isActive }) => ({
             color: isActive ? 'var(--color-secondary)' : 'var(--color-text-muted)',
-            minHeight: '56px',
+            minHeight: '52px',
           })}
         >
           {({ isActive }) => (
@@ -47,8 +47,8 @@ export default function BottomNav() {
                   transition={{ type: 'spring', stiffness: 400, damping: 35 }}
                 />
               )}
-              <Icon size={21} strokeWidth={isActive ? 2.5 : 1.8} />
-              <span style={{ fontSize: '11px' }}>{label}</span>
+              <Icon size={19} strokeWidth={isActive ? 2.5 : 1.8} />
+              <span style={{ fontSize: '10px' }}>{label}</span>
             </>
           )}
         </NavLink>

@@ -78,68 +78,68 @@ function DocCard({ doc }) {
   }
 
   return (
-    <div className="relative" style={{ height: '220px', perspective: '1000px' }}>
-      <motion.div
-        animate={{ rotateY: flipped ? 180 : 0 }}
-        transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
-        style={{ transformStyle: 'preserve-3d', width: '100%', height: '100%', position: 'relative' }}
-      >
-        {/* الوجه الأمامي */}
-        <div
-          className="absolute inset-0 rounded-2xl p-5 flex flex-col justify-between overflow-hidden"
-          style={{
-            background: `linear-gradient(135deg, ${doc.color1} 0%, ${doc.color2} 100%)`,
-            backfaceVisibility: 'hidden',
-            WebkitBackfaceVisibility: 'hidden',
-            boxShadow: '0 12px 40px rgba(0,0,0,0.4)',
-          }}
+    <div className="flex flex-col gap-2">
+      {/* البطاقة القابلة للقلب */}
+      <div style={{ height: '200px', perspective: '1000px' }}>
+        <motion.div
+          animate={{ rotateY: flipped ? 180 : 0 }}
+          transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
+          style={{ transformStyle: 'preserve-3d', width: '100%', height: '100%', position: 'relative' }}
         >
-          {/* Watermark pattern */}
-          <div className="absolute inset-0 opacity-5" style={{
-            backgroundImage: 'repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%)',
-            backgroundSize: '12px 12px',
-          }} />
-
-          <div className="relative z-10 flex justify-between items-start">
-            <div>
-              <p className="text-xs font-semibold mb-1" style={{ color: 'rgba(255,255,255,0.7)' }}>{doc.subtitle}</p>
-              <h3 className="text-base font-black text-white leading-tight">{doc.title}</h3>
-            </div>
-            <span className="text-3xl">{doc.icon}</span>
-          </div>
-
-          <div className="relative z-10">
-            <p className="font-mono text-lg font-bold tracking-widest text-white mb-2">{doc.number}</p>
-            <div className="flex items-center justify-between">
+          {/* الوجه الأمامي */}
+          <div
+            className="absolute inset-0 rounded-2xl p-5 flex flex-col justify-between overflow-hidden"
+            style={{
+              background: `linear-gradient(135deg, ${doc.color1} 0%, ${doc.color2} 100%)`,
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
+              boxShadow: '0 12px 40px rgba(0,0,0,0.4)',
+            }}
+          >
+            <div className="absolute inset-0 opacity-5" style={{
+              backgroundImage: 'repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%)',
+              backgroundSize: '12px 12px',
+            }} />
+            <div className="relative z-10 flex justify-between items-start">
               <div>
-                <p className="text-xs" style={{ color: 'rgba(255,255,255,0.6)' }}>تاريخ الانتهاء</p>
-                <p className="text-sm font-bold text-white">{doc.expiry}</p>
+                <p className="text-xs font-semibold mb-1" style={{ color: 'rgba(255,255,255,0.7)' }}>{doc.subtitle}</p>
+                <h3 className="text-base font-black text-white leading-tight">{doc.title}</h3>
               </div>
-              <StatusBadge status={doc.status} daysLeft={doc.daysLeft} />
+              <span className="text-3xl">{doc.icon}</span>
+            </div>
+            <div className="relative z-10">
+              <p className="font-mono text-lg font-bold tracking-widest text-white mb-2">{doc.number}</p>
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs" style={{ color: 'rgba(255,255,255,0.6)' }}>تاريخ الانتهاء</p>
+                  <p className="text-sm font-bold text-white">{doc.expiry}</p>
+                </div>
+                <StatusBadge status={doc.status} daysLeft={doc.daysLeft} />
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* الوجه الخلفي */}
-        <div
-          className="absolute inset-0 rounded-2xl p-5 flex flex-col"
-          style={{
-            background: `linear-gradient(135deg, ${doc.color2} 0%, ${doc.color1} 100%)`,
-            backfaceVisibility: 'hidden',
-            WebkitBackfaceVisibility: 'hidden',
-            transform: 'rotateY(180deg)',
-            boxShadow: '0 12px 40px rgba(0,0,0,0.4)',
-          }}
-        >
-          <QRPlaceholder title={doc.title} />
-        </div>
-      </motion.div>
+          {/* الوجه الخلفي */}
+          <div
+            className="absolute inset-0 rounded-2xl p-5 flex flex-col"
+            style={{
+              background: `linear-gradient(135deg, ${doc.color2} 0%, ${doc.color1} 100%)`,
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
+              transform: 'rotateY(180deg)',
+              boxShadow: '0 12px 40px rgba(0,0,0,0.4)',
+            }}
+          >
+            <QRPlaceholder title={doc.title} />
+          </div>
+        </motion.div>
+      </div>
 
-      {/* أزرار الإجراءات */}
-      <div className="absolute -bottom-10 left-0 right-0 flex gap-2">
+      {/* أزرار الإجراءات — خارج البطاقة، بدون absolute */}
+      <div className="flex gap-2">
         <button
           onClick={() => setFlipped((f) => !f)}
-          className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-all"
+          className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-semibold"
           style={{ backgroundColor: 'rgba(27,79,114,0.3)', color: 'var(--color-text-main)', border: '1px solid var(--color-border)' }}
         >
           <QrCode size={13} />
@@ -148,7 +148,7 @@ function DocCard({ doc }) {
 
         {doc.status === 'expired' && (
           <button
-            className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-semibold"
             style={{ backgroundColor: 'rgba(192,57,43,0.2)', color: '#E74C3C', border: '1px solid rgba(192,57,43,0.3)' }}
           >
             <RefreshCw size={13} />تجديد
@@ -157,7 +157,7 @@ function DocCard({ doc }) {
 
         <button
           onClick={handleShare}
-          className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-all"
+          className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-semibold transition-all"
           style={{ backgroundColor: 'rgba(243,156,18,0.1)', color: 'var(--color-secondary)', border: '1px solid rgba(243,156,18,0.25)' }}
         >
           {copied ? <><Check size={13} />تم النسخ</> : <><Share2 size={13} />مشاركة</>}
@@ -186,7 +186,7 @@ export default function Wallet() {
       </motion.div>
 
       {/* البطاقات */}
-      <div className="flex flex-col gap-16">
+      <div className="flex flex-col gap-5">
         {WALLET_DOCS.map((doc, i) => (
           <motion.div
             key={doc.id}
@@ -202,7 +202,7 @@ export default function Wallet() {
       {/* تنبيه أمان */}
       <motion.div
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
-        className="mt-16 p-4 rounded-2xl text-center"
+        className="mt-4 p-4 rounded-2xl text-center"
         style={{ backgroundColor: 'rgba(27,79,114,0.08)', border: '1px dashed rgba(27,79,114,0.3)' }}
       >
         <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>

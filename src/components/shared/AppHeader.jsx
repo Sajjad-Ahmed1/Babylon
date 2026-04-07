@@ -29,12 +29,12 @@ export default function AppHeader() {
 
   return (
     <header
-      className="sticky top-0 z-30 flex items-center justify-between px-4 md:px-6 py-3"
+      className="sticky top-0 z-30 flex items-center justify-between px-3 sm:px-4 md:px-6 py-2.5"
       style={{
-        backgroundColor: 'rgba(13,27,42,0.85)',
+        backgroundColor: 'rgba(13,27,42,0.92)',
         backdropFilter: 'blur(12px)',
         borderBottom: '1px solid var(--color-border)',
-        minHeight: '64px',
+        minHeight: '56px',
       }}
     >
       {/* عنوان الصفحة */}

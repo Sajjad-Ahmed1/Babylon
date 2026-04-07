@@ -52,7 +52,7 @@ export default function EstimatedTimeCard({ transaction }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: 0.3 }}
-      className="card p-5"
+      className="card p-5 flex flex-col"
     >
       {/* العنوان */}
       <div className="flex items-center gap-2 mb-4">
@@ -138,16 +138,18 @@ export default function EstimatedTimeCard({ transaction }) {
         </div>
       </div>
 
-      {/* رسالة تشجيعية */}
-      <div
-        className="px-3 py-2.5 rounded-lg text-xs leading-relaxed"
-        style={{
-          backgroundColor: `${barColor}10`,
-          color: 'var(--color-text-muted)',
-          borderRight: `2px solid ${barColor}`,
-        }}
-      >
-        {message}
+      {/* رسالة تشجيعية — تأخذ المساحة المتبقية */}
+      <div className="flex-1 flex flex-col justify-end mt-3">
+        <div
+          className="px-3 py-2.5 rounded-lg text-xs leading-relaxed"
+          style={{
+            backgroundColor: `${barColor}10`,
+            color: 'var(--color-text-muted)',
+            borderRight: `2px solid ${barColor}`,
+          }}
+        >
+          {message}
+        </div>
       </div>
     </motion.div>
   )

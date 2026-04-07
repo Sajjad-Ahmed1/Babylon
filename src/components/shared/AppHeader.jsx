@@ -21,7 +21,7 @@ const SEVERITY_ICON = {
   info:    { Icon: Info,          color: '#5dade2',               bg: 'rgba(93,173,226,0.12)' },
 }
 
-function NotificationsPanel({ alerts, onClose }) {
+function NotificationsPanel({ alerts, onClose, onNavigate }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: -8, scale: 0.96 }}
@@ -64,10 +64,19 @@ function NotificationsPanel({ alerts, onClose }) {
         ) : (
           alerts.map((alert, i) => {
             const sev = SEVERITY_ICON[alert.severity] ?? SEVERITY_ICON.info
+            const isClickable = !!alert.actionPath
             return (
-              <div key={alert.id ?? i}
+              <div
+                key={alert.id ?? i}
+                onClick={isClickable ? () => onNavigate(alert.actionPath) : undefined}
                 className="flex items-start gap-3 px-4 py-3"
-                style={{ borderBottom: i < alerts.length - 1 ? '1px solid var(--color-border)' : 'none' }}
+                style={{
+                  borderBottom: i < alerts.length - 1 ? '1px solid var(--color-border)' : 'none',
+                  cursor: isClickable ? 'pointer' : 'default',
+                  transition: 'background-color 0.15s ease',
+                }}
+                onMouseEnter={(e) => { if (isClickable) e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.04)' }}
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent' }}
               >
                 <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
                   style={{ backgroundColor: sev.bg }}>
@@ -78,8 +87,10 @@ function NotificationsPanel({ alerts, onClose }) {
                     {alert.message}
                   </p>
                   {alert.action && (
-                    <p className="text-xs mt-0.5 font-medium" style={{ color: sev.color }}>
-                      {alert.action} ←
+                    <p className="text-xs mt-1 font-bold flex items-center gap-1"
+                      style={{ color: sev.color }}>
+                      {alert.action}
+                      {isClickable && <span style={{ fontSize: '10px' }}>←</span>}
                     </p>
                   )}
                 </div>
@@ -191,7 +202,11 @@ export default function AppHeader() {
 
           <AnimatePresence>
             {showNotifs && (
-              <NotificationsPanel alerts={alerts} onClose={() => setShowNotifs(false)} />
+              <NotificationsPanel
+                alerts={alerts}
+                onClose={() => setShowNotifs(false)}
+                onNavigate={(path) => { setShowNotifs(false); navigate(path) }}
+              />
             )}
           </AnimatePresence>
         </div>

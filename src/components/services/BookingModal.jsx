@@ -33,8 +33,8 @@ export default function BookingModal({ service, categoryColor, onClose }) {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
-        className="fixed inset-0 z-50 flex items-end md:items-center justify-center p-0 md:p-4"
-        style={{ backgroundColor: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(4px)' }}
+        className="fixed inset-0 z-[70] flex items-end md:items-center justify-center p-0 md:p-4"
+        style={{ backgroundColor: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(4px)' }}
       >
         {/* البطاقة */}
         <motion.div
@@ -44,12 +44,11 @@ export default function BookingModal({ service, categoryColor, onClose }) {
           exit={{ y: '100%', opacity: 0 }}
           transition={{ type: 'spring', stiffness: 340, damping: 32 }}
           onClick={(e) => e.stopPropagation()}
-          className="w-full md:max-w-md rounded-t-3xl md:rounded-2xl overflow-hidden"
+          className="w-full md:max-w-md rounded-t-3xl md:rounded-2xl flex flex-col"
           style={{
             backgroundColor: 'var(--color-bg-card)',
             border: '1px solid var(--color-border)',
-            maxHeight: '90vh',
-            overflowY: 'auto',
+            maxHeight: '92dvh',
           }}
         >
           {/* شريط اللون */}
@@ -75,7 +74,8 @@ export default function BookingModal({ service, categoryColor, onClose }) {
             </button>
           </div>
 
-          <div className="px-5 py-5">
+          <div className="px-5 py-5 overflow-y-auto flex-1"
+            style={{ paddingBottom: 'max(20px, env(safe-area-inset-bottom))' }}>
             {/* حالة التأكيد النهائي */}
             {confirmed ? (
               <motion.div

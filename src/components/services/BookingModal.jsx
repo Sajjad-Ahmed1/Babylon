@@ -4,7 +4,7 @@
  * تعرض تأكيداً للحجز مع ملخص الأوراق المطلوبة
  */
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { X, CalendarCheck, CheckCircle2, ChevronLeft } from 'lucide-react'
 
 const AVAILABLE_DATES = [
@@ -25,10 +25,9 @@ export default function BookingModal({ service, categoryColor, onClose }) {
   }
 
   return (
-    <AnimatePresence>
+    <>
       {/* الخلفية الداكنة */}
       <motion.div
-        key="overlay"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -38,7 +37,6 @@ export default function BookingModal({ service, categoryColor, onClose }) {
       >
         {/* البطاقة */}
         <motion.div
-          key="modal"
           initial={{ y: '100%', opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: '100%', opacity: 0 }}
@@ -216,6 +214,6 @@ export default function BookingModal({ service, categoryColor, onClose }) {
           </div>
         </motion.div>
       </motion.div>
-    </AnimatePresence>
+    </>
   )
 }

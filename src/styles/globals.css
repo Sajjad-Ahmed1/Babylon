@@ -183,6 +183,15 @@
     }
   }
 
+  /* ── Hide scrollbar (used in CategoryTabs) ── */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
   /* ── Golden glow ── */
   .glow-gold {
     box-shadow: 0 0 24px rgba(243, 156, 18, 0.4), 0 0 48px rgba(243, 156, 18, 0.15);

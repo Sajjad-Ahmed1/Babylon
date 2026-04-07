@@ -224,13 +224,15 @@ export default function ServiceCard({ service, categoryColor, index }) {
         </div>
       </motion.div>
 
-      {showModal && (
-        <BookingModal
-          service={service}
-          categoryColor={categoryColor}
-          onClose={() => setShowModal(false)}
-        />
-      )}
+      <AnimatePresence>
+        {showModal && (
+          <BookingModal
+            service={service}
+            categoryColor={categoryColor}
+            onClose={() => setShowModal(false)}
+          />
+        )}
+      </AnimatePresence>
     </>
   )
 }

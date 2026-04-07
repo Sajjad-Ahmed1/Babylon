@@ -4,7 +4,7 @@
  */
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { WalletCards, QrCode, RefreshCw, Share2, CheckCircle, AlertTriangle, XCircle, Copy, Check } from 'lucide-react'
+import { WalletCards, QrCode, RefreshCw, Share2, Copy, Check, CreditCard, Car, Truck } from 'lucide-react'
 import useAppStore from '../store/useAppStore'
 
 const WALLET_DOCS = [
@@ -18,7 +18,7 @@ const WALLET_DOCS = [
     status: 'expiring-soon',
     color1: '#1B4F72',
     color2: '#2471A3',
-    icon: '🪪',
+    Icon: CreditCard,
   },
   {
     id: 'driving',
@@ -30,7 +30,7 @@ const WALLET_DOCS = [
     status: 'expired',
     color1: '#922B21',
     color2: '#C0392B',
-    icon: '🚗',
+    Icon: Car,
   },
   {
     id: 'vehicle',
@@ -42,7 +42,7 @@ const WALLET_DOCS = [
     status: 'valid',
     color1: '#1E8449',
     color2: '#27AE60',
-    icon: '🚙',
+    Icon: Truck,
   },
 ]
 
@@ -105,7 +105,10 @@ function DocCard({ doc }) {
                 <p className="text-xs font-semibold mb-1" style={{ color: 'rgba(255,255,255,0.7)' }}>{doc.subtitle}</p>
                 <h3 className="text-base font-black text-white leading-tight">{doc.title}</h3>
               </div>
-              <span className="text-3xl">{doc.icon}</span>
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
+                <doc.Icon size={22} strokeWidth={1.8} color="rgba(255,255,255,0.9)" />
+              </div>
             </div>
             <div className="relative z-10">
               <p className="font-mono text-lg font-bold tracking-widest text-white mb-2">{doc.number}</p>

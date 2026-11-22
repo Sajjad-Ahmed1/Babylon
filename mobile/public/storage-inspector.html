@@ -1,0 +1,14 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Local Storage — Babylon</title>
+<style>body{margin:0;font:12px/1.5 system-ui,sans-serif;background:#202124;color:#e8eaed}
+.bar{background:#292a2d;padding:8px 12px;border-bottom:1px solid #3c4043;display:flex;gap:16px}
+.bar b{color:#8ab4f8}.wrap{display:flex}.side{width:210px;background:#292a2d;border-right:1px solid #3c4043;padding:8px}
+.side div{padding:3px 6px}.sel{background:#394457;border-radius:3px}
+table{border-collapse:collapse;width:100%;font-family:monospace}th{background:#35363a;text-align:left;padding:5px 8px;border:1px solid #3c4043}
+td{padding:5px 8px;border:1px solid #3c4043;vertical-align:top;word-break:break-all}td:first-child{color:#f28b82;white-space:nowrap}
+</style></head><body>
+<div class="bar"><span>Elements</span><span>Console</span><span>Network</span><b>Application</b></div>
+<div class="wrap"><div class="side"><div>▾ Storage</div><div>&nbsp;&nbsp;▾ Local storage</div><div class="sel">&nbsp;&nbsp;&nbsp;&nbsp;<span id="o"></span></div><div>&nbsp;&nbsp;▸ Session storage</div><div>&nbsp;&nbsp;▸ IndexedDB</div><div>&nbsp;&nbsp;▸ Cookies</div></div>
+<table style="flex:1"><thead><tr><th style="width:190px">Key</th><th>Value</th></tr></thead><tbody id="t"></tbody></table></div>
+<script>document.getElementById('o').textContent=location.origin;
+const t=document.getElementById('t');Object.keys(localStorage).sort().forEach(k=>{const r=t.insertRow();r.insertCell().textContent=k;r.insertCell().textContent=localStorage.getItem(k)});</script>
+</body></html>
